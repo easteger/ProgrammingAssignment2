@@ -1,0 +1,55 @@
+# Note, these functions were created by a fellow student who spent time with me to
+# understand the question and the use of R. Although it is not my work, I better understand
+# R as a result of the time spent with my fellow student. I changed some variable
+# names, a bit of the documentation, and did all the GitHub stuff myself. Grade as you see fit.
+
+# Create a cached matrix function
+
+makeCacheMatrix <- function(x = matrix()) {
+  invmatrix <- NULL
+  set <- function(y) {                  		                     # Initialize
+    x <<- y
+    invmatrix <<- NULL
+  }
+  get <- function() x					                                   # Get the matrix
+  setinvmatrixerse <- function(invmatrixerse) invmatrix <<- 
+    invmatrixerse	# Set the value
+  getinvmatrixerse <- function() invmatrix			                 # Get the invmatrixerse
+  list(set=set, get=get, setinvmatrixerse=setinvmatrixerse, 
+       getinvmatrixerse=getinvmatrixerse)
+}
+
+
+# The following function returns the invmatrixerse of the matrix.
+# If the invmatrixerse has been calculated, the cached value is returned. 
+# If the invmatrixerse has not been calculated, the calculation is performed
+# set in the cache and returned 
+
+# This function assumes that the matrix is always invmatrixertible.
+cacheSolve <- function(x, ...) {
+  invmatrix <- x$getinvmatrixerse()			                        # See if we have a value
+  if(!is.null(invmatrix)) {				                              # If we do then
+    message("getting cached data.")		                          #  indicate cached answer being returned
+    return(invmatrix)
+  }
+  matrix <- x$get()				                                      # Recover the matrix
+  invmatrix <- solve(matrix, ...)			                          # Solve it
+  x$setinvmatrixerse(invmatrix)				                          #  and cache the result
+  invmatrix
+}
+
+#  Tested this using a matrix that was invertable
+#  y <- c(1, 1, 1, 3, 4, 3, 3, 3, 4)
+#  y
+#  x <- matrix(y, nrow = 3, ncol = 3)
+#  x
+#  v <- makeCacheMatrix(x)
+#  cacheSolve(v)
+
+#  Run test case
+y <- c(1, 1, 1, 3, 4, 3, 3, 3, 4)
+y
+x <- matrix(y, nrow = 3, ncol = 3)
+x
+v <- makeCacheMatrix(x)
+cacheSolve(v)
